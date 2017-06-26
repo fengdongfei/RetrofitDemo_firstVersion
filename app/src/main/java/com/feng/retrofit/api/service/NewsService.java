@@ -4,6 +4,7 @@ import com.feng.retrofit.api.host.HostAnoy;
 import com.feng.retrofit.api.host.HostApi;
 import com.feng.retrofit.api.response.MResponse;
 import com.feng.retrofit.model.AdSetModel;
+import com.feng.retrofit.model.CHitNotifyModel;
 import com.feng.retrofit.model.NewsModel;
 import com.feng.retrofit.model.UserModel;
 
@@ -16,6 +17,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -32,6 +34,9 @@ public interface NewsService {
     Call<UserModel> getUser(@FieldMap Map<String, String> hashMap, @Field("loginname") String loginname,
                             @Field("nloginpwd") String nloginpwd);
 
+
+
+
     @HostAnoy.NameSpace(HostApi.TZH_HOST)
     interface TzService{
         @GET("ad")
@@ -39,5 +44,8 @@ public interface NewsService {
 
         @POST("user/login")
         Call<MResponse<UserModel>> login(@Body Map<String, Object> params);
+
+        @PUT("content/hittedhistory")
+        Call<MResponse<CHitNotifyModel>> notifyHit(@Body CHitNotifyModel model);
     }
 }

@@ -15,6 +15,7 @@ import com.feng.retrofit.api.response.MResponse;
 import com.feng.retrofit.api.service.NewsService;
 import com.feng.retrofit.api.service.UpLoadService;
 import com.feng.retrofit.model.AdSetModel;
+import com.feng.retrofit.model.CHitNotifyModel;
 import com.feng.retrofit.model.NewsModel;
 import com.feng.retrofit.model.RCFileModel;
 import com.feng.retrofit.model.UserModel;
@@ -217,11 +218,34 @@ public class MainActivity extends AppCompatActivity {
                 Login();
                 break;
             case R.id.addinto:
+                Notify();
                 break;
             case R.id.start_picss:
                 takeCapture();
                 break;
         }
+    }
+
+    /**
+     * 淘智慧接口测试(PUT)
+     */
+    private void Notify() {
+        CHitNotifyModel model = new CHitNotifyModel();
+        model.contentSid = 500072;
+        RetrofitFactory.getInstance().create(NewsService.TzService.class)
+                .notifyHit(model)
+                .enqueue(new MCallback<MResponse<CHitNotifyModel>>(MApplication.getContext()) {
+
+                    @Override
+                    protected void onSuccess(MResponse<CHitNotifyModel> result) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    protected void onFail(int errorCode, String errorInfo) {
+                        Toast.makeText(MainActivity.this, "onFail", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }
