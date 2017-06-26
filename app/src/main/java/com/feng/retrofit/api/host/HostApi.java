@@ -1,4 +1,4 @@
-package com.feng.retrofit.api;
+package com.feng.retrofit.api.host;
 
 /**
  * Host配置文件

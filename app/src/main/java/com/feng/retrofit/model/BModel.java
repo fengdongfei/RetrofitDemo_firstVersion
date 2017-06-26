@@ -1,7 +1,7 @@
 package com.feng.retrofit.model;
 
-import com.feng.retrofit.api.MResponse;
-import com.feng.retrofit.api.MResult;
+import com.feng.retrofit.api.response.MResponse;
+import com.feng.retrofit.api.response.MResult;
 
 import java.io.Serializable;
 

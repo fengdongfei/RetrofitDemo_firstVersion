@@ -1,7 +1,7 @@
 package com.feng.retrofit.api.service;
 
-import com.feng.retrofit.api.HostAnoy;
-import com.feng.retrofit.api.HostApi;
+import com.feng.retrofit.api.host.HostAnoy;
+import com.feng.retrofit.api.host.HostApi;
 
 import java.util.Map;
 

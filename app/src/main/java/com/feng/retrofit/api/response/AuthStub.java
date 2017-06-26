@@ -1,4 +1,4 @@
-package com.feng.retrofit.api;
+package com.feng.retrofit.api.response;
 
 
 import com.feng.retrofit.MApplication;

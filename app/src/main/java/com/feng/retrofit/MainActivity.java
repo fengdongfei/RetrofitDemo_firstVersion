@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.feng.retrofit.api.MCallback;
-import com.feng.retrofit.api.MResponse;
+import com.feng.retrofit.api.response.MCallback;
+import com.feng.retrofit.api.response.MResponse;
 import com.feng.retrofit.api.service.NewsService;
 import com.feng.retrofit.api.service.UpLoadService;
 import com.feng.retrofit.model.AdSetModel;
@@ -23,6 +23,9 @@ import com.feng.retrofit.utils.MFileUtils;
 import java.io.File;
 import java.util.HashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -32,44 +35,26 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final int TAKE_PICTURE = 101;
+    @BindView(R.id.start)
+    TextView start;
+    @BindView(R.id.login)
+    TextView login;
+    @BindView(R.id.addinto)
+    TextView addinto;
+    @BindView(R.id.start_picss)
+    TextView startPicss;
+
     private File file1, file2;
-    private TextView st;
-    private View start_pics;
     MultipartBody.Part[] file_;
     boolean more = true;//是否是多图片上传
     private File mTmpFile;
-    private TextView login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        st = (TextView) findViewById(R.id.start);
-        login = (TextView) findViewById(R.id.login);
-        start_pics = findViewById(R.id.start_picss);
+        ButterKnife.bind(this);
 
-        st.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                getDate(1, 20);
-                getads();
-            }
-        });
-
-        start_pics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takeCapture();
-
-            }
-        });
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Login();
-            }
-        });
     }
 
     /**
@@ -86,13 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 .enqueue(new MCallback<MResponse<UserModel>>(this) {
                     @Override
                     protected void onSuccess(MResponse<UserModel> result) {
-                        //  请求数据成功
-                        Toast.makeText(MainActivity.this, "success"+result.result.nickName, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "success" + result.result.nickName, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     protected void onFail(int errorCode, String errorInfo) {
-                        // 请求数据失败
                         Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
                     }
 
@@ -151,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     protected void onSuccess(MResponse<NewsModel> result) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                        st.setText(result.code() + " " + result.message() + " " + result.result + "  ");
+                        start.setText(result.code() + " " + result.message() + " " + result.result + "  ");
                     }
 
                     @Override
@@ -173,13 +156,11 @@ public class MainActivity extends AppCompatActivity {
                 .enqueue(new MCallback<MResponse<AdSetModel>>(this) {
                     @Override
                     protected void onSuccess(MResponse<AdSetModel> result) {
-                        //  请求数据成功
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     protected void onFail(int errorCode, String errorInfo) {
-                        // 请求数据失败
                         Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
                     }
 
@@ -214,5 +195,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    @OnClick({R.id.start, R.id.login, R.id.addinto, R.id.start_picss})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.start:
+                getDate(1, 20);
+                getads();
+                break;
+            case R.id.login:
+                Login();
+                break;
+            case R.id.addinto:
+                break;
+            case R.id.start_picss:
+                takeCapture();
+                break;
+        }
     }
 }

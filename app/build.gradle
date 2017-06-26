@@ -34,4 +34,8 @@ dependencies {
 
     //Klog
     compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
+
+    // ButterKnife
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }

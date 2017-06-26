@@ -3,9 +3,9 @@ package com.feng.retrofit.retrofit;
 import android.util.Log;
 
 import com.feng.retrofit.BuildConfig;
-import com.feng.retrofit.api.AuthStub;
-import com.feng.retrofit.api.HostAnoy;
-import com.feng.retrofit.api.HttpLoggingInterceptor;
+import com.feng.retrofit.api.response.AuthStub;
+import com.feng.retrofit.api.host.HostAnoy;
+import com.feng.retrofit.api.response.HttpLoggingInterceptor;
 import com.feng.retrofit.api.service.NewsService;
 import com.feng.retrofit.api.service.UpLoadService;
 import com.socks.library.KLog;

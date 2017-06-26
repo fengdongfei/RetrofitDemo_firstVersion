@@ -16,14 +16,20 @@
         android:id="@+id/start"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="get请求" />
+        android:text="get请求数据" />
 
     <TextView
         android:gravity="center"
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="登陆" />
+        android:text="登陆POST请求" />
+    <TextView
+        android:gravity="center"
+        android:id="@+id/addinto"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="登陆PUT请求" />
 
     <TextView
         android:gravity="center"

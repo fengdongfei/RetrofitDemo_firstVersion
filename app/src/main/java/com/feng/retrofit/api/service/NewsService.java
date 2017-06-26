@@ -1,8 +1,8 @@
 package com.feng.retrofit.api.service;
 
-import com.feng.retrofit.api.HostAnoy;
-import com.feng.retrofit.api.HostApi;
-import com.feng.retrofit.api.MResponse;
+import com.feng.retrofit.api.host.HostAnoy;
+import com.feng.retrofit.api.host.HostApi;
+import com.feng.retrofit.api.response.MResponse;
 import com.feng.retrofit.model.AdSetModel;
 import com.feng.retrofit.model.NewsModel;
 import com.feng.retrofit.model.UserModel;

@@ -1,4 +1,4 @@
-package com.feng.retrofit.api;
+package com.feng.retrofit.api.host;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

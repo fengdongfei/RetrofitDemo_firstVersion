@@ -1,4 +1,4 @@
-package com.feng.retrofit.api;
+package com.feng.retrofit.api.response;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.feng.retrofit.api;
+package com.feng.retrofit.api.response;
 
 import android.app.Activity;
 import android.content.Context;
