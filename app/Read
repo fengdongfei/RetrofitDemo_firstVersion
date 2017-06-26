@@ -1,0 +1,14 @@
+Retrofit提供的请求方式注解有@GET和@POST，参数注解有@PATH和@Field等，我们只介绍常用的;前两个顾名思义就是定义你的请求方式Get or Post
+    @PATH  指的是通过参数填充完整的路径
+        @GET("{name}")
+           Call<User> getUser(@Path("name") String name);
+        这里的参数username会被填充至{name}中，形成完整的Url请求地址，{name}相当于一个占位符；
+    @Query  就是我们的请求的键值对的设置，我们构建Call对象的时候会传入此参数，
+    @FormUrlEncoded  在post中使用
+        @POST("mobileLogin/submit.html")
+            @FormUrlEncoded
+            Call<String> getString(@Field("loginname") String loginname,
+                                  @Field("nloginpwd") String nloginpwd);
+    @Field("loginname")就是键，后面的loginname就是具体的值了
+    @POST 使用post方式,指明url
+    @GET 使用get方式

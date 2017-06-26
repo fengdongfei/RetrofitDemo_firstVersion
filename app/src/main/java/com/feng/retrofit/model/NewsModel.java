@@ -1,4 +1,4 @@
-package com.feng.retrofit;
+package com.feng.retrofit.model;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * bean
  */
 
-public class NewsEntity {
+public class NewsModel {
 
     /**
      * status : true

@@ -28,7 +28,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     //网络加载框架retrofit2
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.7.0'
+
+    //Klog
+    compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
 }

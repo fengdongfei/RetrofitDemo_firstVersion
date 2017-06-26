@@ -20,6 +20,13 @@
 
     <TextView
         android:gravity="center"
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="登陆" />
+
+    <TextView
+        android:gravity="center"
         android:id="@+id/start_picss"
         android:layout_width="match_parent"
         android:layout_height="40dp"
