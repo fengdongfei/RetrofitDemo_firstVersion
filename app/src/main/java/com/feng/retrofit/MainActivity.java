@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.feng.retrofit.api.response.AuthStub;
 import com.feng.retrofit.api.response.MCallback;
 import com.feng.retrofit.api.response.MResponse;
 import com.feng.retrofit.api.service.NewsService;
 import com.feng.retrofit.api.service.UpLoadService;
 import com.feng.retrofit.model.AdSetModel;
 import com.feng.retrofit.model.NewsModel;
+import com.feng.retrofit.model.RCFileModel;
 import com.feng.retrofit.model.UserModel;
 import com.feng.retrofit.retrofit.RetrofitFactory;
 import com.feng.retrofit.utils.MD5;
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
     }
 
     /**
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 .enqueue(new MCallback<MResponse<UserModel>>(this) {
                     @Override
                     protected void onSuccess(MResponse<UserModel> result) {
+                        AuthStub.instance().token = result.result.token;
                         Toast.makeText(MainActivity.this, "success" + result.result.nickName, Toast.LENGTH_SHORT).show();
                     }
 
@@ -78,29 +80,32 @@ public class MainActivity extends AppCompatActivity {
                     protected void onFail(int errorCode, String errorInfo) {
                         Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
                     }
-
-
                 });
     }
 
-    private void updatepic_more() {
+    /**
+     * 图片的上传--暂不可用
+     */
+    private void updatepicMore() {
 //        1、创建RequestBody，其中`multipart/form-data`为编码类型
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
+        RequestBody requestFile = RequestBody.create(MediaType.parse(""), file1);//multipart/form-data
 //        2、创建`MultipartBody.Part`，其中需要注意第一个参数`fileUpload`需要与服务器对应,也就是`键`
         if (more == false) {
-            MultipartBody.Part part = MultipartBody.Part.createFormData("fileUpload", file1.getName(), requestFile);
-            RetrofitFactory.getInstance().create(UpLoadService.class).updateImage(part).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    Toast.makeText(MainActivity.this, response.message(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(MainActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
-                }
+            MultipartBody.Part part = MultipartBody.Part.createFormData("uploadfile", file1.getName(), requestFile);//fileUpload
+            RetrofitFactory.getInstance().create(UpLoadService.class)
+                    .updateImage(part)
+                    .enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Toast.makeText(MainActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
+                        }
 
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         } else {
             file_ = new MultipartBody.Part[2];
             file_[1] = MultipartBody.Part.createFormData("file", file1.getName(), requestFile);
@@ -122,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * GET请求
+     *
      * @param page
      * @param rows
      */
@@ -167,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -175,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
             if (mTmpFile != null) {
                 file1 = new File(mTmpFile.getAbsolutePath());
                 file2 = new File(mTmpFile.getAbsolutePath());
-                updatepic_more();
+                RCFileModel.upload(file1,"img");
+//                updatepicMore();
             }
         } else {
             if (mTmpFile != null && mTmpFile.exists()) {
@@ -184,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 进入相册拍照
+     */
     private void takeCapture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -214,4 +223,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
 }

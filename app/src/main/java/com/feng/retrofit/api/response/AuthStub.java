@@ -7,6 +7,7 @@ import com.feng.retrofit.utils.MDevice;
 import java.util.Date;
 
 /**
+ * header配置
  * Created by wumingming on 02/05/2017.
  */
 public class AuthStub {
