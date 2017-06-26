@@ -15,9 +15,11 @@ import com.feng.retrofit.api.response.MResponse;
 import com.feng.retrofit.api.service.NewsService;
 import com.feng.retrofit.api.service.UpLoadService;
 import com.feng.retrofit.model.AdSetModel;
+import com.feng.retrofit.model.BModel;
 import com.feng.retrofit.model.CHitNotifyModel;
 import com.feng.retrofit.model.NewsModel;
 import com.feng.retrofit.model.RCFileModel;
+import com.feng.retrofit.model.UnFollowModel;
 import com.feng.retrofit.model.UserModel;
 import com.feng.retrofit.retrofit.RetrofitFactory;
 import com.feng.retrofit.utils.MD5;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     TextView addinto;
     @BindView(R.id.start_picss)
     TextView startPicss;
+    @BindView(R.id.delinto)
+    TextView delinto;
 
     private File file1, file2;
     MultipartBody.Part[] file_;
@@ -181,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             if (mTmpFile != null) {
                 file1 = new File(mTmpFile.getAbsolutePath());
                 file2 = new File(mTmpFile.getAbsolutePath());
-                RCFileModel.upload(file1,"img");
+                RCFileModel.upload(file1, "img");
 //                updatepicMore();
             }
         } else {
@@ -207,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.start, R.id.login, R.id.addinto, R.id.start_picss})
+    @OnClick({R.id.start, R.id.login, R.id.addinto, R.id.start_picss,R.id.delinto})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start:
@@ -223,7 +227,31 @@ public class MainActivity extends AppCompatActivity {
             case R.id.start_picss:
                 takeCapture();
                 break;
+            case R.id.delinto:
+                delInfo();
+                break;
         }
+    }
+
+    /**
+     * del
+     */
+    private void delInfo() {
+        UnFollowModel model = new UnFollowModel();
+        model.attentionSid = 59;
+        RetrofitFactory.getInstance().create(NewsService.TzService.class)
+                .unFollow(model)
+                .enqueue(new MCallback<MResponse<BModel>>(this) {
+                    @Override
+                    protected void onSuccess(MResponse<BModel> result) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    protected void onFail(int errorCode, String errorInfo) {
+                        Toast.makeText(MainActivity.this, "onFail", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     /**
@@ -247,5 +275,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 }

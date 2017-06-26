@@ -4,8 +4,10 @@ import com.feng.retrofit.api.host.HostAnoy;
 import com.feng.retrofit.api.host.HostApi;
 import com.feng.retrofit.api.response.MResponse;
 import com.feng.retrofit.model.AdSetModel;
+import com.feng.retrofit.model.BModel;
 import com.feng.retrofit.model.CHitNotifyModel;
 import com.feng.retrofit.model.NewsModel;
+import com.feng.retrofit.model.UnFollowModel;
 import com.feng.retrofit.model.UserModel;
 
 import java.util.Map;
@@ -16,6 +18,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
@@ -47,5 +50,8 @@ public interface NewsService {
 
         @PUT("content/hittedhistory")
         Call<MResponse<CHitNotifyModel>> notifyHit(@Body CHitNotifyModel model);
+
+        @HTTP(method = "DELETE", path = "user/follow", hasBody = true)
+        Call<MResponse<BModel>> unFollow(@Body UnFollowModel model);
     }
 }

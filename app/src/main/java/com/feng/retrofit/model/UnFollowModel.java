@@ -6,7 +6,6 @@ import java.io.Serializable;
  * Created by wumingming on 19/05/2017.
  */
 
-public class CHitNotifyModel implements Serializable {
-    public long contentSid;
+public class UnFollowModel implements Serializable {
     public long attentionSid;
 }

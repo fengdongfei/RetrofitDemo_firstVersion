@@ -30,7 +30,12 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="PUT请求" />
-
+    <TextView
+        android:gravity="center"
+        android:id="@+id/delinto"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Delet请求" />
     <TextView
         android:gravity="center"
         android:id="@+id/start_picss"
