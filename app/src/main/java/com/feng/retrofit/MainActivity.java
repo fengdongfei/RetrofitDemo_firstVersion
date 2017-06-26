@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.feng.retrofit.api.MCallback;
+import com.feng.retrofit.api.MResponse;
 import com.feng.retrofit.api.service.NewsService;
 import com.feng.retrofit.api.service.UpLoadService;
 import com.feng.retrofit.model.AdSetModel;
@@ -43,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         st = (TextView) findViewById(R.id.start);
-        login=(TextView)findViewById(R.id.login);
+        login = (TextView) findViewById(R.id.login);
         start_pics = findViewById(R.id.start_picss);
 
         st.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDate(1, 20);
-//                getads();
+//                getDate(1, 20);
+                getads();
             }
         });
 
@@ -70,25 +72,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 模仿淘智慧登陆（POST）
+     */
     private void Login() {
-        HashMap map=new HashMap();
-        map.put("mobilePhone","13122277856");
+        HashMap map = new HashMap();
+        map.put("mobilePhone", "18298192053");
         map.put("password", MD5.encrypt32("123456"));
-        map.put("textPinNum","");
-        Call<UserModel> call = RetrofitFactory.getInstance().create(NewsService.TzService.class).login(map);
-        call.enqueue(new Callback<UserModel>() {
-            @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                //  请求数据成功
-                Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-            }
+        map.put("textPinNum", "");
+        RetrofitFactory.getInstance()
+                .create(NewsService.TzService.class)
+                .login(map)
+                .enqueue(new MCallback<MResponse<UserModel>>(this) {
+                    @Override
+                    protected void onSuccess(MResponse<UserModel> result) {
+                        //  请求数据成功
+                        Toast.makeText(MainActivity.this, "success"+result.result.nickName, Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
-                // 请求数据失败
-                Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    protected void onFail(int errorCode, String errorInfo) {
+                        // 请求数据失败
+                        Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                });
     }
 
     private void updatepic_more() {
@@ -135,57 +144,48 @@ public class MainActivity extends AppCompatActivity {
      */
     private void getDate(int page, int rows) {
         //这里的NewsEntity就是接口给你返回的Json解析实体
-        Call<NewsModel> call = RetrofitFactory.getInstance().create(NewsService.class).getNewsContent(page, rows);
-        call.enqueue(new Callback<NewsModel>() {
-            @Override
-            public void onResponse(Call<NewsModel> call, Response<NewsModel> response) {
-                //  请求数据成功
-                Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                st.setText(response.code() + " " + response.message() + " " + response.body().getTotal() + "  " + response.body().getTngou().get(0).getDescription());
-            }
+        RetrofitFactory.getInstance()
+                .create(NewsService.class)
+                .getNewsContent(page, rows)
+                .enqueue(new MCallback<MResponse<NewsModel>>(this) {
+                    @Override
+                    protected void onSuccess(MResponse<NewsModel> result) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        st.setText(result.code() + " " + result.message() + " " + result.result + "  ");
+                    }
 
-            @Override
-            public void onFailure(Call<NewsModel> call, Throwable t) {
-                // 请求数据失败
-                Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    protected void onFail(int errorCode, String errorInfo) {
+                        Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
 
     }
 
     /**
      * 模拟淘智慧banner接口（GET）
      */
-    public void getads(){
-        Call<AdSetModel> call = RetrofitFactory.getInstance().create(NewsService.TzService.class).fetchAds();
-        call.enqueue(new Callback<AdSetModel>() {
-            @Override
-            public void onResponse(Call<AdSetModel> call, Response<AdSetModel> response) {
-                //  请求数据成功
-                Toast.makeText(MainActivity.this, "success"+response.body().A.get(0).title, Toast.LENGTH_SHORT).show();
-            }
+    public void getads() {
+        RetrofitFactory.getInstance()
+                .create(NewsService.TzService.class)
+                .fetchAds()
+                .enqueue(new MCallback<MResponse<AdSetModel>>(this) {
+                    @Override
+                    protected void onSuccess(MResponse<AdSetModel> result) {
+                        //  请求数据成功
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onFailure(Call<AdSetModel> call, Throwable t) {
-                // 请求数据失败
-                Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    protected void onFail(int errorCode, String errorInfo) {
+                        // 请求数据失败
+                        Toast.makeText(MainActivity.this, "failure", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
     }
 
-
-    private void takeCapture() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            mTmpFile = null;
-            mTmpFile = MFileUtils.createTmpFile(MainActivity.this);
-            if (mTmpFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));
-                startActivityForResult(takePictureIntent, TAKE_PICTURE);
-            }
-        }
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -201,5 +201,18 @@ public class MainActivity extends AppCompatActivity {
                 mTmpFile.delete();
             }
         }
+    }
+
+    private void takeCapture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            mTmpFile = null;
+            mTmpFile = MFileUtils.createTmpFile(MainActivity.this);
+            if (mTmpFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));
+                startActivityForResult(takePictureIntent, TAKE_PICTURE);
+            }
+        }
+
     }
 }

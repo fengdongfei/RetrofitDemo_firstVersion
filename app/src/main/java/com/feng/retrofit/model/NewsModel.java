@@ -1,12 +1,13 @@
 package com.feng.retrofit.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * bean
  */
 
-public class NewsModel {
+public class NewsModel extends BModel implements Serializable{
 
     /**
      * status : true

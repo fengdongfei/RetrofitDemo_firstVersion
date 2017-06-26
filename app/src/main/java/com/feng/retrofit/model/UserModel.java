@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Chexiangjia-MAC on 17/6/26.
  */
 
-public class UserModel implements Serializable {
+public class UserModel extends BModel  implements Serializable {
     public UserModel(){
         this.name = "";
         this.sex = "";

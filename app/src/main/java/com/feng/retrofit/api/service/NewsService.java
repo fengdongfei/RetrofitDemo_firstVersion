@@ -2,6 +2,7 @@ package com.feng.retrofit.api.service;
 
 import com.feng.retrofit.api.HostAnoy;
 import com.feng.retrofit.api.HostApi;
+import com.feng.retrofit.api.MResponse;
 import com.feng.retrofit.model.AdSetModel;
 import com.feng.retrofit.model.NewsModel;
 import com.feng.retrofit.model.UserModel;
@@ -24,18 +25,19 @@ import retrofit2.http.Query;
 public interface NewsService {
     @GET("lore/list?")
         //这里的NewsEntity就是接口给你返回的Json解析实体
-    Call<NewsModel> getNewsContent(@Query("page") int page, @Query("rows") int rows);
+    Call<MResponse<NewsModel>> getNewsContent(@Query("page") int page, @Query("rows") int rows);
 
     @POST("login/app/user")
     @FormUrlEncoded
     Call<UserModel> getUser(@FieldMap Map<String, String> hashMap, @Field("loginname") String loginname,
                             @Field("nloginpwd") String nloginpwd);
+
     @HostAnoy.NameSpace(HostApi.TZH_HOST)
     interface TzService{
         @GET("ad")
-        Call<AdSetModel> fetchAds();
+        Call<MResponse<AdSetModel>> fetchAds();
 
         @POST("user/login")
-        Call<UserModel> login(@Body Map<String, Object> params);
+        Call<MResponse<UserModel>> login(@Body Map<String, Object> params);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
  * 主页 banner 用
  */
 
-public class AdSetModel implements Serializable {
+public class AdSetModel extends BModel  implements Serializable {
     public List<AdModel> A;
     public List<AdModel> B;
 }
