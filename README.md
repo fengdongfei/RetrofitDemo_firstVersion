@@ -1,4 +1,4 @@
-# RetrofitDemo_GET_POST_UPDATE
+# RetrofitDemo
 主要介绍Retrofit的get,post,图片的单多上传使用案例,以及相关几个常用的注解,简单易懂....
 
 # 概述
@@ -134,14 +134,22 @@
 
 参考资料:
     http://blog.csdn.net/liuhongwei123888/article/details/50375283
+    
     http://www.cnblogs.com/angeldevil/p/3757335.html
+    
     http://square.github.io/retrofit/
+    
     http://www.jianshu.com/p/eb5d03085926
+    
     https://daidingkang.cc/2016/06/17/Retrofit2-network-framework-parsing/
+    
     http://www.2cto.com/kf/201605/510999.html
+    
     http://www.jianshu.com/p/29c2a9ac5abf
+    
     http://www.cnblogs.com/ut2016-progam/p/5687798.html
+    
     https://github.com/ervinsae/EZCode/commit/83281cfa79982ed40f1ca31fa1f4dafb4d7a49cb
-     https：
-     http://www.jianshu.com/p/9a6c204616d2
+    
+    http://www.jianshu.com/p/9a6c204616d2
 
