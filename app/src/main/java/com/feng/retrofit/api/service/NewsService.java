@@ -24,8 +24,23 @@ import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
- * 首先定义请求接口，即程序中都需要什么请求操作
+ * 参数注解有:
+ * @PATH  指的是通过参数填充完整的路径
+     @GET("{name}")
+     Call<User> getUser(@Path("name") String name);
+     这里的参数username会被填充至{name}中，形成完整的Url请求地址，{name}相当于一个占位符；
+
+ @Query  就是我们的请求的键值对的设置，我们构建Call对象的时候会传入此参数，
+
+ @FormUrlEncoded  在post中使用
+     @POST("mobileLogin/submit.html")
+     @FormUrlEncoded
+     Call<String> getString(@Field("loginname") String loginname,@Field("nloginpwd") String nloginpwd);
+
+ * @Field("loginname")就是键，后面的loginname就是具体的值了
  */
+
+// 首先定义请求接口，即程序中都需要什么请求操作
 @HostAnoy.NameSpace(HostApi.SVC_HOST)
 public interface NewsService {
     @GET("lore/list?")
