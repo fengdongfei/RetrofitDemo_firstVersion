@@ -3,11 +3,9 @@ package com.feng.retrofit.retrofit;
 import android.util.Log;
 
 import com.feng.retrofit.BuildConfig;
-import com.feng.retrofit.api.response.AuthStub;
 import com.feng.retrofit.api.host.HostAnoy;
+import com.feng.retrofit.api.response.AuthStub;
 import com.feng.retrofit.api.response.HttpLoggingInterceptor;
-import com.feng.retrofit.api.service.NewsService;
-import com.feng.retrofit.api.service.UpLoadService;
 import com.socks.library.KLog;
 
 import java.io.IOException;
@@ -21,10 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RetrofitFactory {
-    private static NewsService newsService;
-    private static UpLoadService uploadService;
     private static RetrofitFactory mInstance;
-
 
     public static RetrofitFactory getInstance(){
         if (mInstance==null){
